@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:rowCount="4"
+        android:columnCount="4"
+        android:id="@+id/game_board"
+        />
+
+
+    <!-- Bottom Controls Section -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <!-- Score Display -->
+        <TextView
+            android:id="@+id/score_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/score_0"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#776e65"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Direction Arrows -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <!-- Up Arrow -->
+            <ImageButton
+                android:id="@+id/btn_up"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_arrow_up"
+                android:contentDescription="@string/move_up" />
+
+            <!-- Left, Right Arrows -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/btn_left"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_arrow_left"
+                    android:contentDescription="@string/move_left" />
+
+                <View
+                    android:layout_width="60dp"
+                    android:layout_height="60dp" />
+
+                <ImageButton
+                    android:id="@+id/btn_right"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_arrow_right"
+                    android:contentDescription="@string/move_right" />
+
+            </LinearLayout>
+
+            <!-- Down Arrow -->
+            <ImageButton
+                android:id="@+id/btn_down"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_arrow_down"
+                android:contentDescription="@string/move_down" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

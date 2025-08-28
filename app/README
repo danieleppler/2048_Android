@@ -1,0 +1,6 @@
+TO DO :
+1.Create fragment container activity for menu-fragment
+2.Create menu fragment with 2 titles - playgame,scoreboard
+3.Create game fragment and game view model and import game logic into game view model
+4.Create game ended fragment
+5.Create scoreboard fragment with recycler view
