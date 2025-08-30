@@ -2,4 +2,15 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="tile_text_dark_brown">#3C2415</color>        <!-- Dark brown for 2 -->
+    <color name="tile_text_deep_blue">#1A237E</color>         <!-- Deep blue for 4 -->
+    <color name="tile_text_forest_green">#1B5E20</color>      <!-- Forest green for 8 -->
+    <color name="tile_text_burgundy">#880E4F</color>          <!-- Burgundy for 16 -->
+    <color name="tile_text_navy">#0D47A1</color>              <!-- Navy blue for 32 -->
+    <color name="tile_text_dark_purple">#4A148C</color>       <!-- Dark purple for 64 -->
+    <color name="tile_text_crimson">#B71C1C</color>           <!-- Crimson red for 128 -->
+    <color name="tile_text_teal">#004D40</color>              <!-- Dark teal for 256 -->
+    <color name="tile_text_orange">#E65100</color>            <!-- Orange for 512 -->
+    <color name="tile_text_golden">#FF8F00</color>            <!-- Golden yellow for 1024 -->
+    <color name="tile_text_victory_gold">#FFD700</color>      <!-- Victory gold for 2048 -->
 </resources>

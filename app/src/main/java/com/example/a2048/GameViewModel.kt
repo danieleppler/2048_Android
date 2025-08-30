@@ -21,15 +21,10 @@ class GameViewModel : ViewModel() {
     )
     val board: StateFlow<Array<IntArray>> = _board.asStateFlow()
 
-    var gameForfieted: Boolean = false
-    var currMove: String? = null
-
     init{
         assignRandom2();
         assignRandom2();
     }
-
-
 
     fun moveDirection(direction :String?) {
         when (direction) {
@@ -185,7 +180,6 @@ class GameViewModel : ViewModel() {
         }
     }
 
-
     fun resetGame() {
         _board.value = createInitialBoard()
         // Reset any other game state
@@ -200,11 +194,7 @@ class GameViewModel : ViewModel() {
     }
 
     private fun createInitialBoard(): Array<IntArray> {
-        return Array(4) { IntArray(4) { 0 } } // 4x4 board with all zeros
-    }
-
-    fun getCurrentBoard(): Array<IntArray> {
-        return _board.value
+        return Array(4) { IntArray(4) } // 4x4 board with all zeros
     }
 
     private fun assignRandom2() {

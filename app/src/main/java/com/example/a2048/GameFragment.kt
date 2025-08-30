@@ -2,6 +2,7 @@ package com.example.a2048
 
 import android.app.AlertDialog
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,9 @@ import android.view.ViewGroup
 import android.widget.GridLayout
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.annotation.ColorInt
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.toColor
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -16,6 +20,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import androidx.core.graphics.toColorInt
 
 
 class GameFragment: Fragment() {
@@ -27,16 +32,14 @@ class GameFragment: Fragment() {
     }
 
 
-
     private var uiTiles = Array(GRID_SIZE) { Array<TextView?>(GRID_SIZE) { null } }
     private val gameViewModel: GameViewModel by viewModels()
-    private lateinit var scoreText: TextView
     private lateinit var gameGridLayout: GridLayout
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         val view = inflater.inflate(R.layout.fragment_game,container,false)
         return view
@@ -50,23 +53,21 @@ class GameFragment: Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 gameViewModel.board.collect { gameBoard ->
                     updateUi(gameBoard)
+                    var isWon = false;
+                    var isLost = false;
                     if (gameViewModel.checkWin()) {
+                        isWon = true
+                    }
+                    else if(gameViewModel.checkLose()){
+                        isLost =true
+                    }
+                    if(isWon || isLost){
                         AlertDialog.Builder(requireContext())
                             .setTitle("2048")
-                            .setMessage("You won")
+                            .setMessage( if (isLost) "You Lost" else "You Won")
                             .setPositiveButton("OK") { dialog, _ ->
                                 gameViewModel.resetGame()
                                 dialog.dismiss()
-                            }
-                            .show()
-
-                    } else if (gameViewModel.checkLose()) {
-                        AlertDialog.Builder(requireContext())
-                            .setTitle("2048")
-                            .setMessage("You Lost")
-                            .setPositiveButton("OK") { dialog, _ ->
-                                dialog.dismiss()
-                                gameViewModel.resetGame()
                             }
                             .show()
                     }
@@ -75,25 +76,11 @@ class GameFragment: Fragment() {
         }
     }
 
-
     private fun updateUi(gameBoard: Array<IntArray>) {
-        updateGameBoard(gameBoard)
-
-//        // Update score displays
-//        updateScoreDisplay(gameState)
-//
-//        // Update control buttons state
-//        updateControlsState(gameState)
-//
-//        // Handle game end states
-//        handleGameEndStates(gameState)
-    }
-
-    private fun updateGameBoard(board: Array<IntArray>) {
         for (i in 0 until GRID_SIZE) {
             for (j in 0 until GRID_SIZE) {
                 val tile = uiTiles[i][j]
-                val value = board[i][j]
+                val value = gameBoard[i][j]
 
                 tile?.let { tileView ->
                     if (value == 0) {
@@ -113,46 +100,36 @@ class GameFragment: Fragment() {
                 }
             }
         }
-    }
 
-//
-//    private fun getTileBackground(value: Int): Int {
-//        return when (value) {
-//            2 -> R.drawable.tile_2
-//            4 -> R.drawable.tile_4
-//            8 -> R.drawable.tile_8
-//            16 -> R.drawable.tile_16
-//            32 -> R.drawable.tile_32
-//            64 -> R.drawable.tile_64
-//            128 -> R.drawable.tile_128
-//            256 -> R.drawable.tile_256
-//            512 -> R.drawable.tile_512
-//            1024 -> R.drawable.tile_1024
-//            2048 -> R.drawable.tile_2048
-//            else -> R.drawable.tile_background
-//        }
-//    }
+    }
 
     private fun getTileTextColor(value: Int): Int {
         return when (value) {
-            2, 4 -> 0xFF776e65.toInt() // Dark text for light tiles
-            else -> 0xFFf9f6f2.toInt() // Light text for dark tiles
+            2 -> ContextCompat.getColor(requireContext(), R.color.tile_text_dark_brown)      // Dark brown
+            4 -> ContextCompat.getColor(requireContext(), R.color.tile_text_deep_blue)       // Deep blue
+            8 -> ContextCompat.getColor(requireContext(), R.color.tile_text_forest_green)    // Forest green
+            16 -> ContextCompat.getColor(requireContext(), R.color.tile_text_burgundy)       // Burgundy
+            32 -> ContextCompat.getColor(requireContext(), R.color.tile_text_navy)           // Navy blue
+            64 -> ContextCompat.getColor(requireContext(), R.color.tile_text_dark_purple)    // Dark purple
+            128 -> ContextCompat.getColor(requireContext(), R.color.tile_text_crimson)       // Crimson red
+            256 -> ContextCompat.getColor(requireContext(), R.color.tile_text_teal)          // Dark teal
+            512 -> ContextCompat.getColor(requireContext(), R.color.tile_text_orange)        // Orange
+            1024 -> ContextCompat.getColor(requireContext(), R.color.tile_text_golden)       // Golden yellow
+            2048 -> ContextCompat.getColor(requireContext(), R.color.tile_text_victory_gold) // Victory gold
+            else -> ContextCompat.getColor(requireContext(), R.color.tile_text_dark_brown)   // Default dark brown
         }
     }
 
     private fun getTileTextSize(value: Int): Float {
         return when {
-            value < 100 -> 24f
-            value < 1000 -> 20f
-            value < 10000 -> 18f
-            else -> 16f
+            value < 100 -> 16f
+            value < 1000 -> 18f
+            else -> 20f
         }
     }
 
-
     private fun initViews(view: View) {
         gameGridLayout = view.findViewById(R.id.game_board)
-        scoreText = view.findViewById(R.id.score_text)
 
         // Create tile TextViews and add to GridLayout
         for (i in 0 until GRID_SIZE) {

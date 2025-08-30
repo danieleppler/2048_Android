@@ -4,5 +4,4 @@
     <string name="move_left">Move Left</string>
     <string name="move_right">Move Right</string>
     <string name="move_down">Move Down</string>
-    <string name="score_0">Score: 0</string>
 </resources>
